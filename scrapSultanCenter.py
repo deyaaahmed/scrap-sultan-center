@@ -10,6 +10,8 @@ from bs4 import BeautifulSoup
 from urllib.request import urlretrieve
 from csv import writer
 import pandas as pd
+from os import getcwd, chdir
+import os
 
 
 # Using Class ( Object Oriented Programming >>> OOP )
@@ -80,8 +82,13 @@ class Scrapper:
     ####################################
         \n""")
 
-    def donwloadImages(self):
+    current_path = getcwd()
+
+    def donwloadImages(self, path=current_path):
         """Invoking This Method Will download all images that scrapped\nThe default path is current working directory""".title()
+        if not os.path.exists(path):
+            os.mkdir(path)
+        chdir(path)
         for imageLink in self._imagesLinksList:
             imageName = imageLink.split("/")[-1].strip()
             try:
@@ -99,9 +106,7 @@ scrapper = Scrapper()
 scrapper.scrap("https://www.sultan-center.com/food/snack-beverage/biscuits.html")
 
 # Let's Try Our Download Images Method.
-scrapper.donwloadImages()
-
-
+scrapper.donwloadImages("biscuitsImages")
 
 # Creating A New Object From Our Class.
 # scrapper2 = Scrapper()
